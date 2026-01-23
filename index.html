@@ -20,6 +20,8 @@
 
     *{box-sizing:border-box}
 
+    html{ scroll-behavior:smooth; }
+
     body{
       margin:0;
       min-height:100vh;
@@ -187,12 +189,26 @@
         <div class="badge">Vidéoprojection</div>
         <div class="badge">Régie / plateau</div>
         <div class="badge">Tournées & événementiel</div>
-         <div class="badge">Conducteur PL & SPL</div>
+        <div class="badge">Conducteur PL & SPL</div>
       </div>
 
       <!-- ACTIONS -->
       <div class="links">
-        <a class="btn primary" href="tel:+33627255863">
+
+        <!-- NOUVEAU : DEMANDE DE DISPO -->
+        <a class="btn primary"
+           href="mailto:thomas.jamet@cifemvideo.com?subject=Demande%20de%20disponibilit%C3%A9%20-%20Intermittent%20(TJ)&body=Bonjour%20Thomas%2C%0A%0AJe%20souhaite%20te%20proposer%20une%20mission.%0A%0ADate(s)%20%3A%20%0ALieu%20%3A%20%0AHoraires%20%3A%20%0APoste%20(lumi%C3%A8re%20%2F%20vid%C3%A9o%20diffusion%20%2F%20LED%20%2F%20vid%C3%A9oprojection)%20%3A%20%0AInfos%20compl%C3%A9mentaires%20%3A%20%0A%0AMerci%2C%0A">
+          <div class="left">
+            <div class="icon">✅</div>
+            <div class="label">
+              <strong>Demande de dispo</strong>
+              <span>Mail pré-rempli (date / lieu / poste)</span>
+            </div>
+          </div>
+          ›
+        </a>
+
+        <a class="btn" href="tel:+33627255863">
           <div class="left">
             <div class="icon">📞</div>
             <div class="label">
@@ -224,10 +240,23 @@
           </div>
           ›
         </a>
+
+        <!-- NOUVEAU : BOUTON PLANNING -->
+        <a class="btn" href="#planning">
+          <div class="left">
+            <div class="icon">📅</div>
+            <div class="label">
+              <strong>Voir le planning</strong>
+              <span>Disponibilités (vue mois)</span>
+            </div>
+          </div>
+          ›
+        </a>
+
       </div>
 
       <!-- AGENDA : VUE MOIS -->
-      <div class="calendar-wrap">
+      <div class="calendar-wrap" id="planning">
         <div class="calendar">
           <iframe
             title="Planning de disponibilités"
