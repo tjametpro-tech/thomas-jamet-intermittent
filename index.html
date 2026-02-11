@@ -188,8 +188,8 @@ footer{
 
 <div class="links">
 
-<a class="btn primary"
-href="mailto:tjamet.pro@gmail.com">
+<!-- IMPORTANT: id="btn-dispo" pour mail dynamique -->
+<a id="btn-dispo" class="btn primary" href="mailto:tjamet.pro@gmail.com">
   <div class="left">
     <div class="icon">✅</div>
     <strong data-lang="fr">Demande de disponibilité</strong>
@@ -232,10 +232,10 @@ href="mailto:tjamet.pro@gmail.com">
 </summary>
 
 <div class="calendar">
-<iframe
-src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
-style="border:0;width:100%;height:520px">
-</iframe>
+  <iframe
+    src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
+    style="border:0;width:100%;height:520px">
+  </iframe>
 </div>
 </details>
 
@@ -249,19 +249,88 @@ style="border:0;width:100%;height:520px">
 </main>
 
 <script>
-const setLang = lang => {
-  document.querySelectorAll('[data-lang]').forEach(el=>{
+/* =========================================================
+   MAIL PRE-REMPLI FR / EN
+   ========================================================= */
+const MAILTO_BASE = "mailto:tjamet.pro@gmail.com";
+
+const MAIL_FR = {
+  subject: "Demande de disponibilité - (nom de la prestation)",
+  body:
+`Bonjour Thomas,
+
+Je souhaite te proposer une mission.
+
+Date(s) :
+Lieu :
+Horaires :
+Poste :
+Rémunération :
+Contact :
+Infos complémentaires :
+
+Merci,`
+};
+
+const MAIL_EN = {
+  subject: "Availability request - (job / event name)",
+  body:
+`Hi Thomas,
+
+I would like to offer you a job.
+
+Date(s):
+Location:
+Schedule:
+Role:
+Rate / fee:
+Contact:
+Additional information:
+
+Thanks,`
+};
+
+const enc = (s) => encodeURIComponent(s);
+
+const buildMailto = (lang) => {
+  const tpl = (lang === "fr") ? MAIL_FR : MAIL_EN;
+  return `${MAILTO_BASE}?subject=${enc(tpl.subject)}&body=${enc(tpl.body)}`;
+};
+
+/* =========================================================
+   LANGUE: setLang + boutons + auto-détection
+   ========================================================= */
+const setLang = (lang, persist = true) => {
+  document.querySelectorAll('[data-lang]').forEach(el => {
     el.classList.toggle('active', el.dataset.lang === lang);
   });
-  document.querySelectorAll('.lang-btn').forEach(b=>{
+  document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.setLang === lang);
   });
-  localStorage.setItem('lang', lang);
+
+  // Met à jour l'attribut lang
+  document.documentElement.setAttribute('lang', lang);
+
+  // Met à jour le mail pré-rempli
+  const dispoBtn = document.getElementById('btn-dispo');
+  if (dispoBtn) dispoBtn.setAttribute('href', buildMailto(lang));
+
+  if (persist) localStorage.setItem('lang', lang);
 };
-document.querySelectorAll('.lang-btn').forEach(btn=>{
-  btn.onclick = () => setLang(btn.dataset.setLang);
+
+// Clic FR/EN
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.dataset.setLang, true));
 });
-setLang(localStorage.getItem('lang') || 'fr');
+
+// Init : saved > browser
+const savedLang = localStorage.getItem('lang');
+const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+const autoLang = browserLang.startsWith('fr') ? 'fr' : 'en';
+
+setLang(savedLang || autoLang, !!savedLang);
+
+// Année
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 
