@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thomas Jamet — Intermittent du spectacle</title>
-  <meta name="description" content="Thomas Jamet — Technicien & pupitreur lumière, technicien vidéo diffusion (écrans LED & vidéoprojection)." />
+  <title>Thomas Jamet — Intermittent Technician</title>
 
   <style>
     :root{
@@ -45,8 +44,32 @@
       overflow:hidden;
     }
 
+    /* LANG SWITCH */
+    .lang-switch{
+      display:flex;
+      justify-content:flex-end;
+      gap:6px;
+      padding:10px 16px 0;
+    }
+
+    .lang-btn{
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      cursor:pointer;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.35);
+      color:var(--muted);
+    }
+
+    .lang-btn.active{
+      background:rgba(138,180,255,.25);
+      color:var(--text);
+      border-color:rgba(138,180,255,.45);
+    }
+
     header{
-      padding:16px;
+      padding:12px 16px 16px;
       display:flex;
       gap:12px;
       align-items:center;
@@ -64,7 +87,6 @@
     h1{
       margin:0 0 4px;
       font-size:18px;
-      line-height:1.15;
     }
 
     .sub{
@@ -129,59 +151,31 @@
       align-items:center;
       justify-content:center;
       font-size:15px;
-      flex-shrink:0;
     }
 
-    .label strong{
-      font-size:13px;
-      font-weight:600;
-      line-height:1.1;
-    }
+    .label strong{ font-size:13px; }
+    .label span{ font-size:11px; color:var(--muted); }
 
-    .label span{
-      font-size:11px;
-      color:var(--muted);
-    }
+    details{ padding:0 16px 12px; }
 
-    /* Accordéon planning */
-    details{
-      padding:0 16px 12px;
-    }
-
-    summary{
-      list-style:none;
-      cursor:pointer;
-    }
+    summary{ list-style:none; cursor:pointer; }
     summary::-webkit-details-marker{ display:none; }
 
-    /* On transforme le summary en "bouton" identique */
     .summary-btn{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:10px;
+      align-items:center;
       padding:10px 12px;
       border-radius:12px;
-      color:var(--text);
       background:rgba(0,0,0,.30);
       border:1px solid var(--border);
-      user-select:none;
-    }
-
-    details[open] .chev{
-      transform:rotate(90deg);
-    }
-
-    .chev{
-      transition:transform .15s ease;
     }
 
     .calendar{
       margin-top:10px;
-      background:rgba(0,0,0,.25);
-      border:1px solid var(--border);
       border-radius:12px;
       overflow:hidden;
+      border:1px solid var(--border);
     }
 
     footer{
@@ -192,123 +186,109 @@
       display:flex;
       justify-content:space-between;
     }
+
+    [data-lang]{ display:none; }
+    [data-lang].active{ display:block; }
   </style>
 </head>
 
 <body>
-  <main class="wrap">
-    <section class="card">
+<main class="wrap">
+<section class="card">
 
-      <!-- HEADER -->
-      <header>
-        <img src="./thomas-jamet.webp" alt="Thomas Jamet" class="photo">
-        <div>
-          <h1>Thomas Jamet</h1>
-          <p class="sub">Intermittent du spectacle — lumière & vidéo diffusion</p>
+  <!-- LANG -->
+  <div class="lang-switch">
+    <button class="lang-btn active" data-set-lang="fr">FR</button>
+    <button class="lang-btn" data-set-lang="en">EN</button>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <img src="./thomas-jamet.webp" class="photo" alt="Thomas Jamet">
+    <div>
+      <h1>Thomas Jamet</h1>
+      <p class="sub" data-lang="fr" class="active">Intermittent du spectacle — lumière & vidéo diffusion</p>
+      <p class="sub" data-lang="en">Freelance technician — lighting & video systems</p>
+    </div>
+  </header>
+
+  <!-- BADGES -->
+  <div class="badges">
+    <div class="badge" data-lang="fr">Technicien lumière</div>
+    <div class="badge" data-lang="fr">Vidéo diffusion</div>
+
+    <div class="badge" data-lang="en">Lighting technician</div>
+    <div class="badge" data-lang="en">Video technician</div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="links">
+
+    <a class="btn primary" href="mailto:tjamet.pro@gmail.com">
+      <div class="left">
+        <div class="icon">✅</div>
+        <div class="label">
+          <strong data-lang="fr">Demande de disponibilité</strong>
+          <strong data-lang="en">Availability request</strong>
         </div>
-      </header>
+      </div>›
+    </a>
 
-      <!-- COMPÉTENCES -->
-      <div class="badges">
-        <div class="badge">Pupitreur lumière</div>
-        <div class="badge">Technicien lumière</div>
-        <div class="badge">Vidéo diffusion</div>
-        <div class="badge">Écrans LED</div>
-        <div class="badge">Vidéoprojection</div>
-        <div class="badge">Régie / plateau</div>
-        <div class="badge">Tournées & événementiel</div>
-        <div class="badge">Conducteur PL & SPL</div>
-      </div>
-
-      <!-- ACTIONS -->
-      <div class="links">
-
-       <a class="btn primary"
-   href="mailto:tjamet.pro@gmail.com
-?subject=Demande%20de%20disponibilit%C3%A9%20-%20(nom%20de%20la%20prestation)
-&body=Bonjour%20Thomas%2C%0A%0AJe%20souhaite%20te%20proposer%20une%20mission.%0A%0ADate(s)%20%3A%20%0ALieu%20%3A%20%0AHoraires%20%3A%20%0APoste%20%3A%20%0AR%C3%A9mun%C3%A9ration%20%3A%20%0AContact%20%3A%20%0AInfos%20compl%C3%A9mentaires%20%3A%20%0A%0AMerci%2C">
-          <div class="left">
-            <div class="icon">✅</div>
-            <div class="label">
-              <strong>Demande de dispo</strong>
-              <span>Mail pré-rempli (date / lieu / poste)</span>
-            </div>
-          </div>
-          ›
-        </a>
-
-        <a class="btn" href="tel:+33627255863">
-          <div class="left">
-            <div class="icon">📞</div>
-            <div class="label">
-              <strong>Appeler</strong>
-              <span>+33 6 27 25 58 63</span>
-            </div>
-          </div>
-          ›
-        </a>
-
-        <a class="btn" href="./ThomasJamet-Intermittent.vcf">
-          <div class="left">
-            <div class="icon">👤</div>
-            <div class="label">
-              <strong>Ajouter le contact</strong>
-              <span>Thomas Jamet</span>
-            </div>
-          </div>
-          ›
-        </a>
-
-        <a class="btn" href="./cv-thomas-jamet.pdf" target="_blank">
-          <div class="left">
-            <div class="icon">📄</div>
-            <div class="label">
-              <strong>CV</strong>
-              <span>PDF</span>
-            </div>
-          </div>
-          ›
-        </a>
-
-      </div>
-
-      <!-- PLANNING REPLIÉ (dans le bouton) -->
-      <details>
-        <summary>
-          <div class="summary-btn">
-            <div class="left">
-              <div class="icon">📅</div>
-              <div class="label">
-                <strong>Voir le planning</strong>
-                <span></span>
-              </div>
-            </div>
-            <span class="chev">›</span>
-          </div>
-        </summary>
-
-        <div class="calendar">
-          <iframe
-            title="Planning de disponibilités"
-            src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0"
-            style="border:0; width:100%; height:520px;"
-            frameborder="0"
-            scrolling="no">
-          </iframe>
+    <a class="btn" href="tel:+33627255863">
+      <div class="left">
+        <div class="icon">📞</div>
+        <div class="label">
+          <strong data-lang="fr">Appeler</strong>
+          <strong data-lang="en">Call</strong>
         </div>
-      </details>
+      </div>›
+    </a>
 
-      <!-- FOOTER -->
-      <footer>
-        <span>© <span id="year"></span> Thomas Jamet</span>
-        <span>Angers & mobilité</span>
-      </footer>
+  </div>
 
-    </section>
-  </main>
+  <!-- PLANNING -->
+  <details>
+    <summary>
+      <div class="summary-btn">
+        <span data-lang="fr">Voir le planning</span>
+        <span data-lang="en">View availability</span>
+        <span>›</span>
+      </div>
+    </summary>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+    <div class="calendar">
+      <iframe
+        src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
+        style="border:0;width:100%;height:520px">
+      </iframe>
+    </div>
+  </details>
+
+  <footer>
+    <span>© <span id="year"></span> Thomas Jamet</span>
+    <span>Angers & mobility</span>
+  </footer>
+
+</section>
+</main>
+
+<script>
+  const setLang = (lang) => {
+    document.querySelectorAll('[data-lang]').forEach(el=>{
+      el.classList.toggle('active', el.dataset.lang === lang);
+    });
+    document.querySelectorAll('.lang-btn').forEach(b=>{
+      b.classList.toggle('active', b.dataset.setLang === lang);
+    });
+    localStorage.setItem('lang', lang);
+  };
+
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> setLang(btn.dataset.setLang));
+  });
+
+  setLang(localStorage.getItem('lang') || 'fr');
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
