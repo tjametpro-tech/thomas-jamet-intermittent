@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Thomas Jamet — Intermittent / Freelance Technician</title>
 
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4WTVBT2W2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4WTVBT2W2');
+</script>
+
 <style>
 :root{
   --bg:#0b0d12;
@@ -18,18 +27,14 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  min-height:100vh;
-  padding:16px;
+  margin:0;min-height:100vh;padding:16px;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   background:
     radial-gradient(900px 500px at 15% 10%, rgba(138,180,255,.18), transparent 60%),
     radial-gradient(700px 400px at 85% 30%, rgba(255,255,255,.10), transparent 60%),
     var(--bg);
   color:var(--text);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex;align-items:center;justify-content:center;
 }
 .wrap{width:100%;max-width:560px}
 .card{
@@ -39,75 +44,45 @@ body{
   box-shadow:var(--shadow);
   overflow:hidden;
 }
-
-/* LANG SWITCH */
 .lang-switch{
-  display:flex;
-  justify-content:flex-end;
-  gap:6px;
+  display:flex;justify-content:flex-end;gap:6px;
   padding:10px 16px 0;
 }
 .lang-btn{
-  font-size:12px;
-  padding:4px 10px;
-  border-radius:999px;
+  font-size:12px;padding:4px 10px;border-radius:999px;
   border:1px solid var(--border);
   background:rgba(0,0,0,.35);
-  color:var(--muted);
-  cursor:pointer;
+  color:var(--muted);cursor:pointer;
 }
 .lang-btn.active{
   background:rgba(138,180,255,.25);
   color:var(--text);
   border-color:rgba(138,180,255,.45);
 }
-
 header{
-  padding:16px;
-  display:flex;
-  gap:12px;
-  align-items:center;
+  padding:16px;display:flex;gap:12px;align-items:center;
 }
 .photo{
-  width:56px;
-  height:56px;
-  border-radius:16px;
-  object-fit:cover;
-  border:1px solid var(--border);
+  width:56px;height:56px;border-radius:16px;
+  object-fit:cover;border:1px solid var(--border);
 }
 h1{margin:0 0 4px;font-size:18px}
 .sub{margin:0;font-size:12px;color:var(--muted)}
-
 .badges{
-  padding:0 16px 12px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
+  padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:6px;
 }
 .badge{
-  font-size:11px;
-  padding:5px 8px;
-  border-radius:999px;
-  background:rgba(0,0,0,.28);
-  border:1px solid var(--border);
+  font-size:11px;padding:5px 8px;border-radius:999px;
+  background:rgba(0,0,0,.28);border:1px solid var(--border);
 }
-
 .links{
-  padding:0 16px 12px;
-  display:grid;
-  gap:8px;
+  padding:0 16px 12px;display:grid;gap:8px;
 }
 .btn{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:10px 12px;
-  border-radius:12px;
-  text-decoration:none;
-  color:var(--text);
-  background:rgba(0,0,0,.30);
-  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:10px 12px;border-radius:12px;
+  text-decoration:none;color:var(--text);
+  background:rgba(0,0,0,.30);border:1px solid var(--border);
 }
 .primary{
   background:linear-gradient(135deg, rgba(138,180,255,.25), rgba(138,180,255,.12));
@@ -115,13 +90,11 @@ h1{margin:0 0 4px;font-size:18px}
 }
 .left{display:flex;align-items:center;gap:10px}
 .icon{
-  width:30px;height:30px;
-  border-radius:10px;
+  width:30px;height:30px;border-radius:10px;
   background:rgba(138,180,255,.22);
   border:1px solid rgba(138,180,255,.35);
   display:flex;align-items:center;justify-content:center;
 }
-
 details{padding:0 16px 12px}
 summary{list-style:none;cursor:pointer}
 summary::-webkit-details-marker{display:none}
@@ -130,18 +103,12 @@ summary::-webkit-details-marker{display:none}
   padding:10px 12px;border-radius:12px;
   background:rgba(0,0,0,.30);border:1px solid var(--border);
 }
-.calendar{
-  margin-top:10px;border-radius:12px;overflow:hidden;
-  border:1px solid var(--border);
-}
-
+.calendar{margin-top:10px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
 footer{
-  padding:10px 16px;
-  border-top:1px solid var(--border);
+  padding:10px 16px;border-top:1px solid var(--border);
   font-size:11px;color:var(--muted);
   display:flex;justify-content:space-between;
 }
-
 [data-lang]{display:none}
 [data-lang].active{display:inline}
 </style>
@@ -151,9 +118,8 @@ footer{
 <main class="wrap">
 <section class="card">
 
-<!-- LANG -->
 <div class="lang-switch">
-  <button class="lang-btn active" data-set-lang="fr">FR</button>
+  <button class="lang-btn" data-set-lang="fr">FR</button>
   <button class="lang-btn" data-set-lang="en">EN</button>
 </div>
 
@@ -161,7 +127,7 @@ footer{
   <img src="./thomas-jamet.webp" class="photo" alt="Thomas Jamet">
   <div>
     <h1>Thomas Jamet</h1>
-    <p class="sub" data-lang="fr" class="active">Intermittent du spectacle — lumière & vidéo diffusion</p>
+    <p class="sub" data-lang="fr">Intermittent du spectacle — lumière & vidéo diffusion</p>
     <p class="sub" data-lang="en">Freelance technician — lighting & video systems</p>
   </div>
 </header>
@@ -172,24 +138,16 @@ footer{
   <div class="badge" data-lang="fr">Vidéo diffusion</div>
   <div class="badge" data-lang="fr">Écrans LED</div>
   <div class="badge" data-lang="fr">Vidéoprojection</div>
-  <div class="badge" data-lang="fr">Régie / plateau</div>
-  <div class="badge" data-lang="fr">Tournées & événementiel</div>
-  <div class="badge" data-lang="fr">Conducteur PL & SPL</div>
 
-  <div class="badge" data-lang="en">Lighting console operator</div>
-  <div class="badge" data-lang="en">Lighting technician</div>
+  <div class="badge" data-lang="en">Lighting operator</div>
   <div class="badge" data-lang="en">Video technician</div>
   <div class="badge" data-lang="en">LED screens</div>
-  <div class="badge" data-lang="en">Video projection</div>
-  <div class="badge" data-lang="en">Stage / crew</div>
-  <div class="badge" data-lang="en">Tours & events</div>
-  <div class="badge" data-lang="en">Truck driver (C / CE)</div>
+  <div class="badge" data-lang="en">Projection</div>
 </div>
 
 <div class="links">
 
-<!-- IMPORTANT: id="btn-dispo" pour mail dynamique -->
-<a id="btn-dispo" class="btn primary" href="mailto:tjamet.pro@gmail.com">
+<a id="mailBtn" class="btn primary">
   <div class="left">
     <div class="icon">✅</div>
     <strong data-lang="fr">Demande de disponibilité</strong>
@@ -197,45 +155,29 @@ footer{
   </div>›
 </a>
 
-<a class="btn" href="tel:+33627255863">
-  <div class="left">
-    <div class="icon">📞</div>
-    <strong data-lang="fr">Appeler</strong>
-    <strong data-lang="en">Call</strong>
-  </div>›
+<a class="btn" href="tel:+33627255863" onclick="gtag('event','click_phone')">
+  <div class="left"><div class="icon">📞</div><strong>+33 6 27 25 58 63</strong></div>›
 </a>
 
-<a class="btn" href="./ThomasJamet-Intermittent.vcf">
-  <div class="left">
-    <div class="icon">👤</div>
-    <strong data-lang="fr">Ajouter le contact</strong>
-    <strong data-lang="en">Add contact</strong>
-  </div>›
-</a>
-
-<a class="btn" href="./cv-thomas-jamet.pdf" target="_blank">
-  <div class="left">
-    <div class="icon">📄</div>
-    <strong>CV</strong>
-  </div>›
+<a class="btn" href="./cv-thomas-jamet.pdf" target="_blank" onclick="gtag('event','click_cv')">
+  <div class="left"><div class="icon">📄</div><strong>CV</strong></div>›
 </a>
 
 </div>
 
-<details>
+<details onclick="gtag('event','open_planning')">
 <summary>
   <div class="summary-btn">
     <span data-lang="fr">Voir le planning</span>
-    <span data-lang="en">View schedule</span>
+    <span data-lang="en">View availability</span>
     <span>›</span>
   </div>
 </summary>
 
 <div class="calendar">
-  <iframe
-    src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
-    style="border:0;width:100%;height:520px">
-  </iframe>
+<iframe
+src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
+style="border:0;width:100%;height:520px"></iframe>
 </div>
 </details>
 
@@ -249,88 +191,29 @@ footer{
 </main>
 
 <script>
-/* =========================================================
-   MAIL PRE-REMPLI FR / EN
-   ========================================================= */
-const MAILTO_BASE = "mailto:tjamet.pro@gmail.com";
+const frMail =
+`mailto:tjamet.pro@gmail.com
+?subject=Demande%20de%20disponibilit%C3%A9
+&body=Bonjour%20Thomas%2C%0A%0AJe%20souhaite%20te%20proposer%20une%20mission.%0A%0ADates%20:%0ALieu%20:%0AHoraires%20:%0APoste%20:%0AR%C3%A9mun%C3%A9ration%20:%0AContact%20:%0A%0AMerci`;
 
-const MAIL_FR = {
-  subject: "Demande de disponibilité - (nom de la prestation)",
-  body:
-`Bonjour Thomas,
+const enMail =
+`mailto:tjamet.pro@gmail.com
+?subject=Availability%20request
+&body=Hello%20Thomas%2C%0A%0AI'd%20like%20to%20offer%20you%20a%20job.%0A%0ADates%3A%0ALocation%3A%0ASchedule%3A%0APosition%3A%0AFee%3A%0AContact%3A`;
 
-Je souhaite te proposer une mission.
-
-Date(s) :
-Lieu :
-Horaires :
-Poste :
-Rémunération :
-Contact :
-Infos complémentaires :
-
-Merci,`
-};
-
-const MAIL_EN = {
-  subject: "Availability request - (job / event name)",
-  body:
-`Hi Thomas,
-
-I would like to offer you a job.
-
-Date(s):
-Location:
-Schedule:
-Role:
-Salary:
-Contact:
-Additional information:
-
-Thanks,`
-};
-
-const enc = (s) => encodeURIComponent(s);
-
-const buildMailto = (lang) => {
-  const tpl = (lang === "fr") ? MAIL_FR : MAIL_EN;
-  return `${MAILTO_BASE}?subject=${enc(tpl.subject)}&body=${enc(tpl.body)}`;
-};
-
-/* =========================================================
-   LANGUE: setLang + boutons + auto-détection
-   ========================================================= */
-const setLang = (lang, persist = true) => {
-  document.querySelectorAll('[data-lang]').forEach(el => {
+const setLang = lang => {
+  document.querySelectorAll('[data-lang]').forEach(el=>{
     el.classList.toggle('active', el.dataset.lang === lang);
   });
-  document.querySelectorAll('.lang-btn').forEach(b => {
+  document.querySelectorAll('.lang-btn').forEach(b=>{
     b.classList.toggle('active', b.dataset.setLang === lang);
   });
-
-  // Met à jour l'attribut lang
-  document.documentElement.setAttribute('lang', lang);
-
-  // Met à jour le mail pré-rempli
-  const dispoBtn = document.getElementById('btn-dispo');
-  if (dispoBtn) dispoBtn.setAttribute('href', buildMailto(lang));
-
-  if (persist) localStorage.setItem('lang', lang);
+  document.getElementById('mailBtn').href = lang === 'en' ? enMail : frMail;
+  localStorage.setItem('lang', lang);
 };
 
-// Clic FR/EN
-document.querySelectorAll('.lang-btn').forEach(btn => {
-  btn.addEventListener('click', () => setLang(btn.dataset.setLang, true));
-});
-
-// Init : saved > browser
-const savedLang = localStorage.getItem('lang');
-const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-const autoLang = browserLang.startsWith('fr') ? 'fr' : 'en';
-
-setLang(savedLang || autoLang, !!savedLang);
-
-// Année
+const browserLang = navigator.language.startsWith('en') ? 'en' : 'fr';
+setLang(localStorage.getItem('lang') || browserLang);
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 
