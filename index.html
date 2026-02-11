@@ -3,18 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
 <title>Thomas Jamet — Intermittent / Freelance Technician</title>
-<meta name="description" content="Thomas Jamet — Lighting & video technician (LED screens & projection)." />
 
-<!-- ===== GOOGLE ANALYTICS GA4 ===== -->
+<!-- ===== GOOGLE ANALYTICS (GA4) ===== -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W4TVBT2W2"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-W4TVBT2W2');
+  gtag('config', 'G-W4TVBT2W2', { anonymize_ip: true });
 </script>
 <!-- ===== FIN GOOGLE ANALYTICS ===== -->
 
@@ -166,8 +163,8 @@ footer{
 
 <!-- LANG -->
 <div class="lang-switch">
-  <button class="lang-btn" data-set-lang="fr">FR</button>
-  <button class="lang-btn" data-set-lang="en">EN</button>
+  <button class="lang-btn" data-set-lang="fr" type="button">FR</button>
+  <button class="lang-btn" data-set-lang="en" type="button">EN</button>
 </div>
 
 <header>
@@ -185,17 +182,24 @@ footer{
   <div class="badge" data-lang="fr">Vidéo diffusion</div>
   <div class="badge" data-lang="fr">Écrans LED</div>
   <div class="badge" data-lang="fr">Vidéoprojection</div>
+  <div class="badge" data-lang="fr">Régie / plateau</div>
+  <div class="badge" data-lang="fr">Tournées & événementiel</div>
+  <div class="badge" data-lang="fr">Conducteur PL & SPL</div>
 
   <div class="badge" data-lang="en">Lighting operator</div>
   <div class="badge" data-lang="en">Lighting technician</div>
   <div class="badge" data-lang="en">Video technician</div>
   <div class="badge" data-lang="en">LED screens</div>
   <div class="badge" data-lang="en">Video projection</div>
+  <div class="badge" data-lang="en">Stage / crew</div>
+  <div class="badge" data-lang="en">Tours & events</div>
+  <div class="badge" data-lang="en">Truck driver (C / CE)</div>
 </div>
 
 <div class="links">
 
-<a id="mailBtn" class="btn primary">
+<!-- IMPORTANT: id="btn-dispo" pour mail dynamique -->
+<a id="btn-dispo" class="btn primary" href="mailto:tjamet.pro@gmail.com">
   <div class="left">
     <div class="icon">✅</div>
     <strong data-lang="fr">Demande de disponibilité</strong>
@@ -203,17 +207,32 @@ footer{
   </div>›
 </a>
 
-<a class="btn" href="tel:+33627255863" onclick="gtag('event','call_click')">
-  <div class="left"><div class="icon">📞</div><strong>Call</strong></div>›
+<a id="btn-call" class="btn" href="tel:+33627255863">
+  <div class="left">
+    <div class="icon">📞</div>
+    <strong data-lang="fr">Appeler</strong>
+    <strong data-lang="en">Call</strong>
+  </div>›
 </a>
 
-<a class="btn" href="./cv-thomas-jamet.pdf" target="_blank" onclick="gtag('event','cv_open')">
-  <div class="left"><div class="icon">📄</div><strong>CV</strong></div>›
+<a id="btn-vcf" class="btn" href="./ThomasJamet-Intermittent.vcf">
+  <div class="left">
+    <div class="icon">👤</div>
+    <strong data-lang="fr">Ajouter le contact</strong>
+    <strong data-lang="en">Add contact</strong>
+  </div>›
+</a>
+
+<a id="btn-cv" class="btn" href="./cv-thomas-jamet.pdf" target="_blank" rel="noopener">
+  <div class="left">
+    <div class="icon">📄</div>
+    <strong>CV</strong>
+  </div>›
 </a>
 
 </div>
 
-<details>
+<details id="planning-details">
 <summary>
   <div class="summary-btn">
     <span data-lang="fr">Voir le planning</span>
@@ -223,10 +242,11 @@ footer{
 </summary>
 
 <div class="calendar">
-<iframe
-src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
-style="border:0;width:100%;height:520px">
-</iframe>
+  <iframe
+    title="Planning"
+    src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
+    style="border:0;width:100%;height:520px">
+  </iframe>
 </div>
 </details>
 
@@ -240,30 +260,112 @@ style="border:0;width:100%;height:520px">
 </main>
 
 <script>
-const browserLang = navigator.language.startsWith('fr') ? 'fr' : 'en';
-const savedLang = localStorage.getItem('lang') || browserLang;
+/* =========================================================
+   MAIL PRE-REMPLI FR / EN
+   ========================================================= */
+const MAILTO_BASE = "mailto:tjamet.pro@gmail.com";
 
-function setLang(lang){
-  document.querySelectorAll('[data-lang]').forEach(el=>{
+const MAIL_FR = {
+  subject: "Demande de disponibilité - (nom de la prestation)",
+  body:
+`Bonjour Thomas,
+
+Je souhaite te proposer une mission.
+
+Date(s) :
+Lieu :
+Horaires :
+Poste :
+Rémunération :
+Contact :
+Infos complémentaires :
+
+Merci,`
+};
+
+const MAIL_EN = {
+  subject: "Availability request - (job / event name)",
+  body:
+`Hi Thomas,
+
+I would like to offer you a job.
+
+Date(s):
+Location:
+Schedule:
+Role:
+Rate / fee:
+Contact:
+Additional information:
+
+Thanks,`
+};
+
+const enc = (s) => encodeURIComponent(s);
+
+const buildMailto = (lang) => {
+  const tpl = (lang === "fr") ? MAIL_FR : MAIL_EN;
+  return `${MAILTO_BASE}?subject=${enc(tpl.subject)}&body=${enc(tpl.body)}`;
+};
+
+/* =========================================================
+   LANGUE: setLang + boutons + auto-détection
+   ========================================================= */
+const setLang = (lang, persist = true) => {
+  document.querySelectorAll('[data-lang]').forEach(el => {
     el.classList.toggle('active', el.dataset.lang === lang);
   });
-  document.querySelectorAll('.lang-btn').forEach(b=>{
+  document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.setLang === lang);
   });
 
-  const mailFR = `mailto:tjamet.pro@gmail.com?subject=Demande%20de%20disponibilit%C3%A9&body=Bonjour%20Thomas%2C%0A%0AJe%20souhaite%20te%20proposer%20une%20mission.%0A%0ADates%20:%0ALieu%20:%0AHoraires%20:%0APoste%20:%0AR%C3%A9mun%C3%A9ration%20:%0AContact%20:%0A%0AMerci`;
-  const mailEN = `mailto:tjamet.pro@gmail.com?subject=Availability%20request&body=Hello%20Thomas%2C%0A%0AI%20would%20like%20to%20offer%20you%20a%20job.%0A%0ADates%20:%0ALocation%20:%0ASchedule%20:%0APosition%20:%0AFee%20:%0AContact%20:%0A%0AThank%20you`;
+  document.documentElement.setAttribute('lang', lang);
 
-  document.getElementById('mailBtn').href = lang === 'fr' ? mailFR : mailEN;
-  localStorage.setItem('lang', lang);
-}
+  // Met à jour le mail pré-rempli
+  const dispoBtn = document.getElementById('btn-dispo');
+  if (dispoBtn) dispoBtn.setAttribute('href', buildMailto(lang));
 
-document.querySelectorAll('.lang-btn').forEach(btn=>{
-  btn.onclick = () => setLang(btn.dataset.setLang);
+  if (persist) localStorage.setItem('lang', lang);
+
+  // Tracking lang switch
+  try {
+    gtag('event', 'lang_switch', { language: lang });
+  } catch(e){}
+};
+
+// Clic FR/EN
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.dataset.setLang, true));
 });
 
-setLang(savedLang);
+// Init : saved > browser
+const savedLang = localStorage.getItem('lang');
+const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+const autoLang = browserLang.startsWith('fr') ? 'fr' : 'en';
+
+setLang(savedLang || autoLang, !!savedLang);
+
+// Année
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* =========================================================
+   TRACKING CLICS (GA4)
+   ========================================================= */
+const safeEvent = (name, params={}) => {
+  try { gtag('event', name, params); } catch(e) {}
+};
+
+const byId = (id) => document.getElementById(id);
+
+byId('btn-dispo')?.addEventListener('click', () => safeEvent('click_dispo'));
+byId('btn-call')?.addEventListener('click', () => safeEvent('click_call'));
+byId('btn-vcf')?.addEventListener('click', () => safeEvent('click_vcf'));
+byId('btn-cv')?.addEventListener('click', () => safeEvent('click_cv'));
+
+byId('planning-details')?.addEventListener('toggle', (e) => {
+  if (e.target.open) safeEvent('toggle_planning', { state: 'open' });
+  else safeEvent('toggle_planning', { state: 'close' });
+});
 </script>
 
 </body>
