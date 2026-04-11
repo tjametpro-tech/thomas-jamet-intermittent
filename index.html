@@ -132,20 +132,43 @@ h1{margin:0 0 4px;font-size:18px}
   display:flex;align-items:center;justify-content:center;
 }
 
-/* FORM */
-.form-block{
-  padding:0 16px 12px;
-}
-.form-card{
-  margin-top:10px;
-  padding:14px;
+/* DETAILS / SUMMARY */
+details{padding:0 16px 12px}
+summary{list-style:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+.summary-btn{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
   border-radius:12px;
   background:rgba(0,0,0,.30);
   border:1px solid var(--border);
 }
-.form-title{
-  margin:0 0 6px;
-  font-size:15px;
+.summary-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* CONTACT DETAILS BLOCK INSIDE LINKS FLOW */
+.contact-details{
+  padding:0;
+}
+.contact-details summary{
+  margin:0;
+}
+.contact-details .form-card{
+  margin-top:8px;
+}
+
+/* FORM */
+.form-card{
+  padding:14px;
+  border-radius:12px;
+  background:rgba(0,0,0,.30);
+  border:1px solid var(--border);
 }
 .form-text{
   margin:0 0 12px;
@@ -216,14 +239,6 @@ h1{margin:0 0 4px;font-size:18px}
 .success-msg{ color:#b8f7c5; }
 .error-msg{ color:#ffb4b4; }
 
-details{padding:0 16px 12px}
-summary{list-style:none;cursor:pointer}
-summary::-webkit-details-marker{display:none}
-.summary-btn{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:10px 12px;border-radius:12px;
-  background:rgba(0,0,0,.30);border:1px solid var(--border);
-}
 .calendar{
   margin-top:10px;border-radius:12px;overflow:hidden;
   border:1px solid var(--border);
@@ -282,86 +297,74 @@ footer{
 
 <div class="links">
 
-<a id="btn-dispo" class="btn primary" href="mailto:tjamet.pro@gmail.com">
-  <div class="left">
-    <div class="icon">✅</div>
-    <strong data-lang="fr">Demande de disponibilité</strong>
-    <strong data-lang="en">Availability request</strong>
-  </div>›
-</a>
+  <a id="btn-dispo" class="btn primary" href="mailto:tjamet.pro@gmail.com">
+    <div class="left">
+      <div class="icon">✅</div>
+      <strong data-lang="fr">Demande de disponibilité</strong>
+      <strong data-lang="en">Availability request</strong>
+    </div>›
+  </a>
 
-<a id="btn-lead-toggle" class="btn" href="#contact-form-section">
-  <div class="left">
-    <div class="icon">📝</div>
-    <strong data-lang="fr">Laisser vos coordonnées</strong>
-    <strong data-lang="en">Leave your contact details</strong>
-  </div>›
-</a>
-
-<a id="btn-vcf" class="btn" href="./ThomasJamet-Intermittent.vcf">
-  <div class="left">
-    <div class="icon">👤</div>
-    <strong data-lang="fr">Ajouter le contact</strong>
-    <strong data-lang="en">Add contact</strong>
-  </div>›
-</a>
-
-<a id="btn-cv" class="btn" href="./cv-thomas-jamet.pdf" target="_blank" rel="noopener">
-  <div class="left">
-    <div class="icon">📄</div>
-    <strong>CV</strong>
-  </div>›
-</a>
-
-</div>
-
-<details id="contact-form-section" class="form-block">
-  <summary>
-    <div class="summary-btn">
-      <span data-lang="fr">Laisser vos coordonnées</span>
-      <span data-lang="en">Leave your contact details</span>
-      <span>›</span>
-    </div>
-  </summary>
-
-  <div class="form-card">
-    <p class="form-text" data-lang="fr">
-      Vous avez scanné ma carte NFC ? Laissez vos coordonnées et je vous recontacte.
-    </p>
-    <p class="form-text" data-lang="en">
-      Scanned my NFC card? Leave your details and I will get back to you.
-    </p>
-
-    <form id="lead-form" action="https://script.google.com/macros/s/AKfycbzGmzFUJ6Dbe0vuP0sI-njTjZhoN9fmWX9jkFnKIotUlwoawPRlJsuedlwsjHvaBD0HnA/exec" method="POST">
-      <input type="hidden" name="source" id="lead-source" value="direct">
-      <input type="hidden" name="lang" id="lead-lang" value="fr">
-      <input type="hidden" name="consent" value="yes">
-
-      <div class="form-grid two">
-        <div class="field">
-          <label class="label" for="name">
-            <span data-lang="fr">Nom</span>
-            <span data-lang="en">Name</span>
-          </label>
-          <input class="input" id="name" name="name" type="text" required placeholder="Jean Dupont">
+  <details id="contact-form-section" class="contact-details">
+    <summary>
+      <div class="summary-btn">
+        <div class="summary-left">
+          <div class="icon">📝</div>
+          <strong data-lang="fr">Laisser vos coordonnées</strong>
+          <strong data-lang="en">Leave your contact details</strong>
         </div>
-
-        <div class="field">
-          <label class="label" for="company">
-            <span data-lang="fr">Société</span>
-            <span data-lang="en">Company</span>
-          </label>
-          <input class="input" id="company" name="company" type="text" placeholder="Nom de société">
-        </div>
+        <span>›</span>
       </div>
+    </summary>
 
-      <div class="form-grid two">
-        <div class="field">
-          <label class="label" for="phone">
-            <span data-lang="fr">Téléphone</span>
-            <span data-lang="en">Phone</span>
-          </label>
-          <input class="input" id="phone" name="phone" type="tel" placeholder="+33 6 12 34 56 78">
+    <div class="form-card">
+      <p class="form-text" data-lang="fr">
+        Vous avez scanné ma carte NFC ? Laissez vos coordonnées et je vous recontacte.
+      </p>
+      <p class="form-text" data-lang="en">
+        Scanned my NFC card? Leave your details and I will get back to you.
+      </p>
+
+      <form id="lead-form" action="https://script.google.com/macros/s/AKfycbzGmzFUJ6Dbe0vuP0sI-njTjZhoN9fmWX9jkFnKIotUlwoawPRlJsuedlwsjHvaBD0HnA/exec" method="POST">
+        <input type="hidden" name="source" id="lead-source" value="direct">
+        <input type="hidden" name="lang" id="lead-lang" value="fr">
+        <input type="hidden" name="consent" value="yes">
+        <input type="hidden" name="name" id="full-name" value="">
+
+        <div class="form-grid two">
+          <div class="field">
+            <label class="label" for="first_name">
+              <span data-lang="fr">Prénom</span>
+              <span data-lang="en">First name</span>
+            </label>
+            <input class="input" id="first_name" name="first_name" type="text" required placeholder="Jean">
+          </div>
+
+          <div class="field">
+            <label class="label" for="last_name">
+              <span data-lang="fr">Nom</span>
+              <span data-lang="en">Last name</span>
+            </label>
+            <input class="input" id="last_name" name="last_name" type="text" required placeholder="Dupont">
+          </div>
+        </div>
+
+        <div class="form-grid two">
+          <div class="field">
+            <label class="label" for="company">
+              <span data-lang="fr">Société</span>
+              <span data-lang="en">Company</span>
+            </label>
+            <input class="input" id="company" name="company" type="text" placeholder="Nom de société">
+          </div>
+
+          <div class="field">
+            <label class="label" for="phone">
+              <span data-lang="fr">Téléphone</span>
+              <span data-lang="en">Phone</span>
+            </label>
+            <input class="input" id="phone" name="phone" type="tel" placeholder="+33 6 12 34 56 78">
+          </div>
         </div>
 
         <div class="field">
@@ -371,50 +374,68 @@ footer{
           </label>
           <input class="input" id="email" name="email" type="email" placeholder="contact@entreprise.com">
         </div>
-      </div>
 
-      <div class="field">
-        <label class="label" for="message">
-          <span data-lang="fr">Votre besoin</span>
-          <span data-lang="en">Your request</span>
-        </label>
-        <textarea
-          class="textarea"
-          id="message"
-          name="message"
-          required
-          placeholder="Dates, lieu, type de prestation, matériel, contexte..."></textarea>
-      </div>
+        <div class="field">
+          <label class="label" for="message">
+            <span data-lang="fr">Votre besoin</span>
+            <span data-lang="en">Your request</span>
+          </label>
+          <textarea
+            class="textarea"
+            id="message"
+            name="message"
+            required
+            placeholder="Dates, lieu, type de prestation, matériel, contexte..."></textarea>
+        </div>
 
-      <div class="form-actions">
-        <button type="submit" class="submit-btn">
-          <span data-lang="fr">Envoyer mon contact</span>
-          <span data-lang="en">Send contact</span>
-        </button>
-      </div>
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">
+            <span data-lang="fr">Envoyer la demande</span>
+            <span data-lang="en">Send request</span>
+          </button>
+        </div>
 
-      <div id="form-success" class="success-msg hidden"></div>
-      <div id="form-error" class="error-msg hidden"></div>
-    </form>
-  </div>
-</details>
+        <div id="form-success" class="success-msg hidden"></div>
+        <div id="form-error" class="error-msg hidden"></div>
+      </form>
+    </div>
+  </details>
+
+  <a id="btn-vcf" class="btn" href="./ThomasJamet-Intermittent.vcf">
+    <div class="left">
+      <div class="icon">👤</div>
+      <strong data-lang="fr">Ajouter le contact</strong>
+      <strong data-lang="en">Add contact</strong>
+    </div>›
+  </a>
+
+  <a id="btn-cv" class="btn" href="./cv-thomas-jamet.pdf" target="_blank" rel="noopener">
+    <div class="left">
+      <div class="icon">📄</div>
+      <strong>CV</strong>
+    </div>›
+  </a>
+
+</div>
 
 <details id="planning-details">
-<summary>
-  <div class="summary-btn">
-    <span data-lang="fr">Voir le planning</span>
-    <span data-lang="en">View schedule</span>
-    <span>›</span>
-  </div>
-</summary>
+  <summary>
+    <div class="summary-btn">
+      <div class="summary-left">
+        <span data-lang="fr">Voir le planning</span>
+        <span data-lang="en">View schedule</span>
+      </div>
+      <span>›</span>
+    </div>
+  </summary>
 
-<div class="calendar">
-  <iframe
-    title="Planning"
-    src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
-    style="border:0;width:100%;height:520px">
-  </iframe>
-</div>
+  <div class="calendar">
+    <iframe
+      title="Planning"
+      src="https://calendar.google.com/calendar/embed?src=dGhvbWFzamFtZXQ0OUBnbWFpbC5jb20&ctz=Europe%2FParis&mode=MONTH&showTitle=0"
+      style="border:0;width:100%;height:520px">
+    </iframe>
+  </div>
 </details>
 
 <footer>
@@ -543,7 +564,6 @@ if (langInput) langInput.value = document.documentElement.getAttribute('lang') |
    TRACKING CLICS
    ========================================================= */
 byId('btn-dispo')?.addEventListener('click', () => safeEvent('click_dispo'));
-byId('btn-lead-toggle')?.addEventListener('click', () => safeEvent('click_lead_toggle'));
 byId('btn-vcf')?.addEventListener('click', () => safeEvent('click_vcf'));
 byId('btn-cv')?.addEventListener('click', () => safeEvent('click_cv'));
 
@@ -558,10 +578,9 @@ byId('contact-form-section')?.addEventListener('toggle', (e) => {
 });
 
 /* =========================================================
-   OUVERTURE FORMULAIRE DEPUIS LES BOUTONS
+   OUVERTURE FORMULAIRE DEPUIS "AJOUTER LE CONTACT"
    ========================================================= */
 const contactDetails = byId('contact-form-section');
-const leadToggleBtn = byId('btn-lead-toggle');
 const vcfBtn = byId('btn-vcf');
 
 const openLeadForm = () => {
@@ -570,12 +589,6 @@ const openLeadForm = () => {
     contactDetails.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 };
-
-leadToggleBtn?.addEventListener('click', (e) => {
-  e.preventDefault();
-  openLeadForm();
-  safeEvent('open_lead_form', { trigger: 'menu_button' });
-});
 
 vcfBtn?.addEventListener('click', () => {
   setTimeout(() => {
@@ -590,6 +603,7 @@ vcfBtn?.addEventListener('click', () => {
 const leadForm = byId('lead-form');
 const formSuccess = byId('form-success');
 const formError = byId('form-error');
+const fullNameInput = byId('full-name');
 
 if (leadForm) {
   leadForm.addEventListener('submit', async (e) => {
@@ -605,8 +619,20 @@ if (leadForm) {
       formError.textContent = '';
     }
 
+    const firstNameValue = (byId('first_name')?.value || '').trim();
+    const lastNameValue = (byId('last_name')?.value || '').trim();
     const emailValue = (byId('email')?.value || '').trim();
     const phoneValue = (byId('phone')?.value || '').trim();
+
+    if (!firstNameValue || !lastNameValue) {
+      if (formError) {
+        formError.textContent = document.documentElement.lang === 'fr'
+          ? 'Merci de renseigner le prénom et le nom.'
+          : 'Please provide first name and last name.';
+        formError.classList.remove('hidden');
+      }
+      return;
+    }
 
     if (!emailValue && !phoneValue) {
       if (formError) {
@@ -616,6 +642,10 @@ if (leadForm) {
         formError.classList.remove('hidden');
       }
       return;
+    }
+
+    if (fullNameInput) {
+      fullNameInput.value = `${firstNameValue} ${lastNameValue}`.trim();
     }
 
     const formData = new FormData(leadForm);
@@ -628,16 +658,25 @@ if (leadForm) {
     try {
       const response = await fetch(leadForm.action, {
         method: 'POST',
-        body: formData
+        body: formData,
+        redirect: 'follow'
       });
 
-      const result = await response.json();
+      const rawText = await response.text();
+      let result = null;
+
+      try {
+        result = JSON.parse(rawText);
+      } catch(parseError) {
+        throw new Error(`Réponse non JSON: ${rawText.slice(0, 200)}`);
+      }
 
       if (result.ok) {
         leadForm.reset();
 
         if (sourceInput) sourceInput.value = sourceValue;
         if (langInput) langInput.value = document.documentElement.getAttribute('lang') || 'fr';
+        if (fullNameInput) fullNameInput.value = '';
 
         if (formSuccess) {
           formSuccess.textContent = document.documentElement.lang === 'fr'
@@ -654,15 +693,16 @@ if (leadForm) {
         throw new Error(result.error || 'Submission failed');
       }
     } catch (err) {
+      console.error('Erreur formulaire:', err);
+
       if (formError) {
         formError.textContent = document.documentElement.lang === 'fr'
-          ? 'Une erreur est survenue. Vous pouvez aussi me contacter par téléphone ou e-mail.'
-          : 'Something went wrong. You can also contact me by phone or email.';
+          ? `Une erreur est survenue. Détail : ${err.message}`
+          : `Something went wrong. Detail: ${err.message}`;
         formError.classList.remove('hidden');
       }
 
       safeEvent('lead_form_error', { source: sourceValue });
-      console.error(err);
     }
   });
 }
