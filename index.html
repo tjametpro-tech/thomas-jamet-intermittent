@@ -134,10 +134,10 @@ h1{margin:0 0 4px;font-size:18px}
 
 /* FORM */
 .form-block{
-  padding:0 16px 16px;
+  padding:0 16px 12px;
 }
 .form-card{
-  margin-top:4px;
+  margin-top:10px;
   padding:14px;
   border-radius:12px;
   background:rgba(0,0,0,.30);
@@ -151,6 +151,7 @@ h1{margin:0 0 4px;font-size:18px}
   margin:0 0 12px;
   font-size:12px;
   color:var(--muted);
+  line-height:1.5;
 }
 .form-grid{
   display:grid;
@@ -186,17 +187,6 @@ h1{margin:0 0 4px;font-size:18px}
 .textarea{
   min-height:110px;
   resize:vertical;
-}
-.checkbox{
-  display:flex;
-  align-items:flex-start;
-  gap:8px;
-  font-size:12px;
-  color:var(--muted);
-  margin-top:4px;
-}
-.checkbox input{
-  margin-top:2px;
 }
 .form-actions{
   display:flex;
@@ -300,11 +290,11 @@ footer{
   </div>›
 </a>
 
-<a id="btn-call" class="btn" href="tel:+33627255863">
+<a id="btn-lead-toggle" class="btn" href="#contact-form-section">
   <div class="left">
-    <div class="icon">📞</div>
-    <strong data-lang="fr">Appeler</strong>
-    <strong data-lang="en">Call</strong>
+    <div class="icon">📝</div>
+    <strong data-lang="fr">Laisser vos coordonnées</strong>
+    <strong data-lang="en">Leave your contact details</strong>
   </div>›
 </a>
 
@@ -325,11 +315,16 @@ footer{
 
 </div>
 
-<section class="form-block">
-  <div class="form-card">
-    <h2 class="form-title" data-lang="fr">Laisser vos coordonnées</h2>
-    <h2 class="form-title" data-lang="en">Leave your contact details</h2>
+<details id="contact-form-section" class="form-block">
+  <summary>
+    <div class="summary-btn">
+      <span data-lang="fr">Laisser vos coordonnées</span>
+      <span data-lang="en">Leave your contact details</span>
+      <span>›</span>
+    </div>
+  </summary>
 
+  <div class="form-card">
     <p class="form-text" data-lang="fr">
       Vous avez scanné ma carte NFC ? Laissez vos coordonnées et je vous recontacte.
     </p>
@@ -340,6 +335,7 @@ footer{
     <form id="lead-form" action="https://script.google.com/macros/s/AKfycbzGmzFUJ6Dbe0vuP0sI-njTjZhoN9fmWX9jkFnKIotUlwoawPRlJsuedlwsjHvaBD0HnA/exec" method="POST">
       <input type="hidden" name="source" id="lead-source" value="direct">
       <input type="hidden" name="lang" id="lead-lang" value="fr">
+      <input type="hidden" name="consent" value="yes">
 
       <div class="form-grid two">
         <div class="field">
@@ -390,12 +386,6 @@ footer{
           placeholder="Dates, lieu, type de prestation, matériel, contexte..."></textarea>
       </div>
 
-      <label class="checkbox">
-        <input type="checkbox" id="consent" name="consent" required>
-        <span data-lang="fr">J’accepte d’être recontacté suite à cette demande.</span>
-        <span data-lang="en">I agree to be contacted back regarding this request.</span>
-      </label>
-
       <div class="form-actions">
         <button type="submit" class="submit-btn">
           <span data-lang="fr">Envoyer la demande</span>
@@ -407,7 +397,7 @@ footer{
       <div id="form-error" class="error-msg hidden"></div>
     </form>
   </div>
-</section>
+</details>
 
 <details id="planning-details">
 <summary>
@@ -529,18 +519,15 @@ function setLang(lang, persist = true) {
   safeEvent('lang_switch', { language: lang });
 }
 
-// Clic FR/EN
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => setLang(btn.dataset.setLang, true));
 });
 
-// Init langue
 const savedLang = localStorage.getItem('lang');
 const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
 const autoLang = browserLang.startsWith('fr') ? 'fr' : 'en';
 setLang(savedLang || autoLang, !!savedLang);
 
-// Année
 byId("year").textContent = new Date().getFullYear();
 
 /* =========================================================
@@ -556,13 +543,45 @@ if (langInput) langInput.value = document.documentElement.getAttribute('lang') |
    TRACKING CLICS
    ========================================================= */
 byId('btn-dispo')?.addEventListener('click', () => safeEvent('click_dispo'));
-byId('btn-call')?.addEventListener('click', () => safeEvent('click_call'));
+byId('btn-lead-toggle')?.addEventListener('click', () => safeEvent('click_lead_toggle'));
 byId('btn-vcf')?.addEventListener('click', () => safeEvent('click_vcf'));
 byId('btn-cv')?.addEventListener('click', () => safeEvent('click_cv'));
 
 byId('planning-details')?.addEventListener('toggle', (e) => {
   if (e.target.open) safeEvent('toggle_planning', { state: 'open' });
   else safeEvent('toggle_planning', { state: 'close' });
+});
+
+byId('contact-form-section')?.addEventListener('toggle', (e) => {
+  if (e.target.open) safeEvent('toggle_contact_form', { state: 'open' });
+  else safeEvent('toggle_contact_form', { state: 'close' });
+});
+
+/* =========================================================
+   OUVERTURE FORMULAIRE DEPUIS LES BOUTONS
+   ========================================================= */
+const contactDetails = byId('contact-form-section');
+const leadToggleBtn = byId('btn-lead-toggle');
+const vcfBtn = byId('btn-vcf');
+
+const openLeadForm = () => {
+  if (contactDetails) {
+    contactDetails.open = true;
+    contactDetails.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+leadToggleBtn?.addEventListener('click', (e) => {
+  e.preventDefault();
+  openLeadForm();
+  safeEvent('open_lead_form', { trigger: 'menu_button' });
+});
+
+vcfBtn?.addEventListener('click', () => {
+  setTimeout(() => {
+    openLeadForm();
+  }, 300);
+  safeEvent('open_lead_form', { trigger: 'vcf_button' });
 });
 
 /* =========================================================
