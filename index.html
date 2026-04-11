@@ -400,8 +400,8 @@ footer{
 
         <div class="form-actions">
           <button type="submit" class="submit-btn">
-            <span data-lang="fr">Envoyer la demande</span>
-            <span data-lang="en">Send request</span>
+            <span data-lang="fr">Envoyer mon contact</span>
+            <span data-lang="en">Send contact</span>
           </button>
         </div>
 
@@ -679,8 +679,8 @@ if (leadForm) {
         if (formPending) formPending.classList.add('hidden');
         if (formSuccess) {
           formSuccess.textContent = document.documentElement.lang === 'fr'
-            ? 'Demande envoyée. Si rien ne remonte dans Google Sheets, le prochain point à corriger sera Apps Script.'
-            : 'Request sent. If nothing appears in Google Sheets, the next fix will be in Apps Script.';
+            ? 'Contact envoyée.'
+            : 'Contact sent.';
           formSuccess.classList.remove('hidden');
         }
         leadForm.reset();
