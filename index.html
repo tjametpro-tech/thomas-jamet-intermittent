@@ -132,7 +132,6 @@ h1{margin:0 0 4px;font-size:18px}
   display:flex;align-items:center;justify-content:center;
 }
 
-/* DETAILS / SUMMARY */
 details{padding:0 16px 12px}
 summary{list-style:none;cursor:pointer}
 summary::-webkit-details-marker{display:none}
@@ -152,18 +151,13 @@ summary::-webkit-details-marker{display:none}
   gap:10px;
 }
 
-/* CONTACT DETAILS BLOCK INSIDE LINKS FLOW */
 .contact-details{
   padding:0;
-}
-.contact-details summary{
-  margin:0;
 }
 .contact-details .form-card{
   margin-top:8px;
 }
 
-/* FORM */
 .form-card{
   padding:14px;
   border-radius:12px;
@@ -242,26 +236,30 @@ summary::-webkit-details-marker{display:none}
 .pending-msg{ color:#b8d4ff; }
 
 .calendar{
-  margin-top:10px;border-radius:12px;overflow:hidden;
+  margin-top:10px;
+  border-radius:12px;
+  overflow:hidden;
   border:1px solid var(--border);
 }
 
 footer{
   padding:10px 16px;
   border-top:1px solid var(--border);
-  font-size:11px;color:var(--muted);
-  display:flex;justify-content:space-between;
+  font-size:11px;
+  color:var(--muted);
+  display:flex;
+  justify-content:space-between;
 }
 
 [data-lang]{display:none}
 [data-lang].active{display:inline}
 
 .hidden-iframe{
+  position:absolute;
   width:0;
   height:0;
   border:0;
   visibility:hidden;
-  position:absolute;
 }
 </style>
 </head>
@@ -270,7 +268,6 @@ footer{
 <main class="wrap">
 <section class="card">
 
-<!-- LANG -->
 <div class="lang-switch">
   <button class="lang-btn" data-set-lang="fr" type="button">FR</button>
   <button class="lang-btn" data-set-lang="en" type="button">EN</button>
@@ -335,7 +332,12 @@ footer{
         Scanned my NFC card? Leave your details and I will get back to you.
       </p>
 
-      <form id="lead-form" action="https://script.googleusercontent.com/macros/echo?user_content_key=AWDtjMW1AcsTbTSokobM_leosE3knoxxhrH8YzQiMfpf9LIhvTlgcCuI280lF5q9McGPxpE-g0O0UV31BbNMIEm1DPgosYSM_OfWUmk3W7qLlZ8wiOd36Yqu17axl5UgKrUHLqzot5reK18hGQqPkbXYwb4CA0jg4NT1SCyv_qstY2MpfxhJ-vD7AmEu-lkkrzLHPfg6-IHQVSafUd0Trv1063Lryj4qexZaCB5r6ssCawHpkVGuuO3G-RfCESv9EYlvkHRywnmlf-Nl0ws_u3pccPot7ns8DA&lib=MOfjzog-AuC7f3j4FkfBNRT1E2RI8lx4C">
+      <form
+        id="lead-form"
+        action="https://script.google.com/macros/s/AKfycbzGmzFUJ6Dbe0vuP0sI-njTjZhoN9fmWX9jkFnKIotUlwoawPRlJsuedlwsjHvaBD0HnA/exec"
+        method="POST"
+        target="lead_submit_frame">
+
         <input type="hidden" name="source" id="lead-source" value="direct">
         <input type="hidden" name="lang" id="lead-lang" value="fr">
         <input type="hidden" name="consent" value="yes">
@@ -400,8 +402,8 @@ footer{
 
         <div class="form-actions">
           <button type="submit" class="submit-btn">
-            <span data-lang="fr">Envoyer mon contact</span>
-            <span data-lang="en">Send contact</span>
+            <span data-lang="fr">Envoyer la demande</span>
+            <span data-lang="en">Send request</span>
           </button>
         </div>
 
@@ -461,9 +463,6 @@ footer{
 <iframe name="lead_submit_frame" id="lead_submit_frame" class="hidden-iframe"></iframe>
 
 <script>
-/* =========================================================
-   MAIL PRE-REMPLI FR / EN
-   ========================================================= */
 const MAILTO_BASE = "mailto:tjamet.pro@gmail.com";
 
 const MAIL_FR = {
@@ -515,9 +514,6 @@ const safeEvent = (name, params = {}) => {
 
 const byId = (id) => document.getElementById(id);
 
-/* =========================================================
-   SOURCE AUTO (nfc / qr / direct)
-   ========================================================= */
 const params = new URLSearchParams(window.location.search);
 const srcParam = (params.get('src') || '').toLowerCase();
 
@@ -525,9 +521,6 @@ let sourceValue = 'direct';
 if (srcParam === 'nfc') sourceValue = 'nfc';
 if (srcParam === 'qr') sourceValue = 'qr';
 
-/* =========================================================
-   LANGUE
-   ========================================================= */
 function setLang(lang, persist = true) {
   document.querySelectorAll('[data-lang]').forEach(el => {
     el.classList.toggle('active', el.dataset.lang === lang);
@@ -561,18 +554,12 @@ setLang(savedLang || autoLang, !!savedLang);
 
 byId("year").textContent = new Date().getFullYear();
 
-/* =========================================================
-   INIT FORMULAIRE
-   ========================================================= */
 const sourceInput = byId('lead-source');
 if (sourceInput) sourceInput.value = sourceValue;
 
 const langInput = byId('lead-lang');
 if (langInput) langInput.value = document.documentElement.getAttribute('lang') || 'fr';
 
-/* =========================================================
-   TRACKING
-   ========================================================= */
 byId('btn-dispo')?.addEventListener('click', () => safeEvent('click_dispo'));
 byId('btn-vcf')?.addEventListener('click', () => safeEvent('click_vcf'));
 byId('btn-cv')?.addEventListener('click', () => safeEvent('click_cv'));
@@ -585,9 +572,6 @@ byId('contact-form-section')?.addEventListener('toggle', (e) => {
   safeEvent('toggle_contact_form', { state: e.target.open ? 'open' : 'close' });
 });
 
-/* =========================================================
-   OUVERTURE FORMULAIRE DEPUIS "AJOUTER LE CONTACT"
-   ========================================================= */
 const contactDetails = byId('contact-form-section');
 const vcfBtn = byId('btn-vcf');
 
@@ -605,17 +589,11 @@ vcfBtn?.addEventListener('click', () => {
   safeEvent('open_lead_form', { trigger: 'vcf_button' });
 });
 
-/* =========================================================
-   GESTION FORMULAIRE SANS FETCH
-   ========================================================= */
 const leadForm = byId('lead-form');
 const formPending = byId('form-pending');
 const formSuccess = byId('form-success');
 const formError = byId('form-error');
 const fullNameInput = byId('full-name');
-const submitFrame = byId('lead_submit_frame');
-
-let submitStarted = false;
 
 if (leadForm) {
   leadForm.addEventListener('submit', (e) => {
@@ -659,8 +637,6 @@ if (leadForm) {
       fullNameInput.value = `${firstNameValue} ${lastNameValue}`.trim();
     }
 
-    submitStarted = true;
-
     if (formPending) {
       formPending.textContent = document.documentElement.lang === 'fr'
         ? 'Envoi en cours...'
@@ -668,34 +644,21 @@ if (leadForm) {
       formPending.classList.remove('hidden');
     }
 
-    safeEvent('lead_form_submit', {
-      source: sourceValue,
-      language: document.documentElement.getAttribute('lang') || 'fr'
-    });
-
     setTimeout(() => {
-      if (submitStarted) {
-        submitStarted = false;
-        if (formPending) formPending.classList.add('hidden');
-        if (formSuccess) {
-          formSuccess.textContent = document.documentElement.lang === 'fr'
-            ? 'Contact envoyée.'
-            : 'Contact sent.';
-          formSuccess.classList.remove('hidden');
-        }
-        leadForm.reset();
-        if (sourceInput) sourceInput.value = sourceValue;
-        if (langInput) langInput.value = document.documentElement.getAttribute('lang') || 'fr';
-        if (fullNameInput) fullNameInput.value = '';
-        safeEvent('lead_form_success_assumed', { source: sourceValue });
+      if (formPending) formPending.classList.add('hidden');
+      if (formSuccess) {
+        formSuccess.textContent = document.documentElement.lang === 'fr'
+          ? 'Demande envoyée.'
+          : 'Request sent.';
+        formSuccess.classList.remove('hidden');
       }
-    }, 1800);
+      safeEvent('lead_form_submit', {
+        source: sourceValue,
+        language: document.documentElement.getAttribute('lang') || 'fr'
+      });
+    }, 700);
   });
 }
-
-submitFrame?.addEventListener('load', () => {
-  if (!submitStarted) return;
-});
 </script>
 
 </body>
